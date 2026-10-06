@@ -1,0 +1,32 @@
+data:
+  # Paths are relative to action_prediction/. The full splits are available on
+  # request (see data/README.md).
+  train_path: ../data/train.json
+  val_path: ../data/val.json
+  test_path: ../data/test.json
+  use_initial_contact: true
+  use_scammer_action: true
+  use_victim_action: false
+  # Turn-level GPT-4o-mini labels used to train the boundary classifier
+  train_labels_path: ../data/train_llm_labels.jsonl
+  val_labels_path: ../data/val_llm_labels.jsonl
+  test_labels_path: ../data/test_llm_labels.jsonl
+
+model:
+  name: roberta-base
+  max_length: 512
+
+training:
+  output_dir: checkpoints/boundary_roberta
+  num_epochs: 10
+  batch_size: 32
+  eval_batch_size: 64
+  learning_rate: 2.0e-5
+  warmup_steps: 100
+  weight_decay: 0.01
+  logging_steps: 100
+  seed: 42
+  use_class_weights: true
+
+inference:
+  confidence_threshold: 0.9

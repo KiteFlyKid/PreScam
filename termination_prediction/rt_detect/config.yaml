@@ -1,0 +1,99 @@
+# Path is relative to termination_prediction/. Replace with the full dataset
+# (available on request, see data/README.md) to reproduce the paper.
+input: ../data/demo.json
+
+output_dir: rt_detect/results
+
+# Data settings
+min_rounds: 3
+scammed_only: true
+test_size: 0.2
+random_seed: 42
+
+# Example building
+# sampling_mode:
+#   all  — one example per turn t=1..N-1; examples within a
+#           conversation are nested, positive rate ≈ 1/(N-1)
+#   pair — 1 positive + 1 negative sampled per conversation; examples
+#           are independent across conversations, positive rate = 50%
+sampling_mode: pair
+# positive_last_k: last k rounds count as label=1 (k=1 in the main experiments)
+positive_last_k: 1
+
+# Which methods to run (any subset)
+methods:
+  - position_only
+  - tfidf
+  - mlp_tfidf
+  - mlp_embed
+  - lstm
+  - transformer
+  - hierarchical
+  - bert
+  - llm
+
+# LLM settings (OpenRouter slug). Paper: openai/gpt-4o-mini, deepseek/deepseek-v3.2,
+# qwen/qwen3-235b-a22b-2507, x-ai/grok-4.1-fast
+llm_model: openai/gpt-4o-mini
+max_workers: 50
+
+# Supervised settings
+label_mode: binary
+
+# Shared vocab / sequence settings (mlp_embed, lstm, transformer)
+vocab_max_size: 20000
+seq_max_len: 256
+
+# MLP settings (shared between mlp_tfidf and mlp_embed)
+mlp_tfidf_features: 10000
+mlp_embed_dim: 128
+mlp_hidden_dims: [512, 256]
+mlp_epochs: 15
+mlp_batch_size: 64
+mlp_lr: 1.0e-3
+mlp_dropout: 0.3
+
+# LSTM settings
+lstm_embed_dim: 128
+lstm_hidden_dim: 256
+lstm_num_layers: 2
+lstm_epochs: 25
+lstm_batch_size: 128
+lstm_lr: 1.0e-3
+lstm_dropout: 0.3
+
+# Transformer settings
+transformer_embed_dim: 128
+transformer_nhead: 4
+transformer_num_layers: 2
+transformer_ff_dim: 512
+transformer_epochs: 25
+transformer_batch_size: 128
+transformer_lr: 1.0e-3
+transformer_dropout: 0.1
+
+# Hierarchical encoder settings
+# encoder embed_dim is determined automatically from hier_encoder_model
+# hier_nhead must divide the encoder's hidden size (384 for MiniLM, 768 for BERT)
+hier_encoder_model: sentence-transformers/all-MiniLM-L6-v2
+hier_nhead: 4
+hier_num_layers: 2
+hier_ff_dim: 256
+hier_dropout: 0.1
+hier_epochs: 15
+hier_batch_size: 32
+hier_lr: 1.0e-3
+hier_max_rounds: 10   # max rounds per conversation (longer sequences are truncated)
+
+# BERT settings
+bert_model: bert-base-uncased
+bert_epochs: 5
+bert_batch_size: 16
+bert_lr: 2.0e-5
+
+# Device
+device: cuda
+
+# Input formatting
+include_victim: true
+include_initial_contact: true
