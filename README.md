@@ -1,6 +1,6 @@
 # PreScam
 
-Code and demo data for **PreScam: A Benchmark for Predicting Scam Progression from Early Conversations** ([arXiv:2605.12243](https://arxiv.org/abs/2605.12243)).
+Code and demo data for **PreScam: A Benchmark for Predicting Scam Progression from Early Conversations** (COLM 2026) [[arXiv](https://arxiv.org/abs/2605.12243)].
 
 PreScam contains 11,573 real-world scam conversations across 20 scam categories. Each conversation is structured into three stages, *Initial Contact*, *Engagement*, and *Termination*, and every scammer action is annotated with psychological techniques (PTs). The benchmark defines two tasks:
 
@@ -54,11 +54,11 @@ The scripts report Action HitRate, PT HitRate, and Precision using a GPT-4o-mini
 ## Citation
 
 ```bibtex
-@article{sun2026prescam,
-  title   = {PreScam: A Benchmark for Predicting Scam Progression from Early Conversations},
-  author  = {Sun, Weixiang and Ma, Shang and Li, Yiyang and Ma, Tianyi and Wang, Zehong and Nelson, Colby and Xiao, Xusheng and Ye, Yanfang},
-  journal = {arXiv preprint arXiv:2605.12243},
-  year    = {2026}
+@inproceedings{sun2026prescam,
+  title     = {PreScam: A Benchmark for Predicting Scam Progression from Early Conversations},
+  author    = {Sun, Weixiang and Ma, Shang and Li, Yiyang and Ma, Tianyi and Wang, Zehong and Nelson, Colby and Xiao, Xusheng and Ye, Yanfang},
+  booktitle = {Conference on Language Modeling (COLM)},
+  year      = {2026}
 }
 ```
 
